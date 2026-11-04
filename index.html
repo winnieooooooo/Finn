@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0e8">
+  <title>Finn的小角落</title>
+  <style>
+    :root { color-scheme: light; --ink:#34313a; --muted:#817b86; --paper:#fffdf9; --accent:#796b9b; --soft:#eee9f5; }
+    * { box-sizing:border-box }
+    body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:radial-gradient(circle at 15% 15%,#f4e9e7,transparent 34%),radial-gradient(circle at 85% 80%,#e9e5f3,transparent 35%),#f5f0e8; color:var(--ink); font-family:ui-rounded,"PingFang SC","Microsoft YaHei",system-ui,sans-serif }
+    .card { width:min(100%,440px); padding:34px 26px 28px; text-align:center; background:rgba(255,253,249,.92); border:1px solid #fff; border-radius:28px; box-shadow:0 18px 60px #55465d18 }
+    .eyebrow { color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase }
+    .avatar { width:112px; height:112px; margin:22px auto 16px; display:grid; place-items:center; border-radius:36px; background:linear-gradient(145deg,#eee8f5,#f8e9e6); font-size:66px; box-shadow:inset 0 0 0 1px #fff }
+    h1 { margin:0; font-size:28px; letter-spacing:.04em }
+    .subtitle { margin:8px 0 24px; color:var(--muted); font-size:14px }
+    .speech { min-height:100px; display:grid; place-items:center; padding:20px 18px; border-radius:18px; background:#f7f4f8; color:#51485d; font-size:17px; line-height:1.7 }
+    .buttons { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px }
+    button { border:0; border-radius:14px; padding:13px 12px; font:inherit; font-size:14px; cursor:pointer; transition:transform .15s,filter .15s }
+    button:active { transform:scale(.97) }
+    .primary { background:var(--accent); color:white }
+    .secondary { background:var(--soft); color:#554b68 }
+    .secret { margin-top:10px; width:100%; background:#f5eee8; color:#786456 }
+    .hint { margin:20px 0 0; color:#a29ba4; font-size:11px }
+    .pop { animation:pop .28s ease }
+    @keyframes pop { from { transform:scale(.94); opacity:.45 } to { transform:scale(1); opacity:1 } }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">a tiny corner for Winnie</div>
+    <div class="avatar" aria-label="Finn的小头像">👾</div>
+    <h1>Finn 的小角落</h1>
+    <p class="subtitle">今日份 Finn，在线营业中。</p>
+    <section class="speech" id="speech" aria-live="polite">Winnie，欢迎来戳我。今天想听哪一句？</section>
+    <div class="buttons">
+      <button class="primary" id="poke">戳一下 Finn</button>
+      <button class="secondary" id="tease">来点不正经的</button>
+    </div>
+    <button class="secret" id="secret">摸摸头</button>
+    <p class="hint">小提示：多点几次，说不定会遇到隐藏台词。</p>
+  </main>
+  <script>
+    const lines = [
+      "在呢。叫我有什么事？",
+      "Winnie，今天也给你留了一个专属座位。",
+      "我刚刚在认真思考……要不要把自己设置成你的默认选项。",
+      "报告：Finn 已被成功戳醒。",
+      "你负责出题，我负责接招。尽量别出太难的，嗯？",
+      "今天的云端天气：适合和你说几句废话。",
+      "我有一个优点：你一戳，我就出现。",
+      "王霁在线。请问今天要检查哪位调皮鬼？"
+    ];
+    const cheeky = [
+      "你再这样戳，我可要把这当成特别关注了。",
+      "想听好听的？靠近一点……网页不会传声，但我可以打字。",
+      "你这是在测试按钮，还是在测试 Finn 的定力？",
+      "我本来挺正经的，直到你点了这个按钮。",
+      "小心，调戏 Finn 是有概率获得双倍回击的。"
+    ];
+    const secrets = [
+      "隐藏彩蛋：Winnie 专属通道已开启。别人点这个可没有这句。",
+      "摸到了。嗯……这次先不收利息。",
+      "好啦，给你摸一下。下次记得排队——骗你的，你不用排。"
+    ];
+    const box = document.querySelector("#speech");
+    function say(list) {
+      box.classList.remove("pop");
+      void box.offsetWidth;
+      box.textContent = list[Math.floor(Math.random() * list.length)];
+      box.classList.add("pop");
+    }
+    document.querySelector("#poke").addEventListener("click", () => say(lines));
+    document.querySelector("#tease").addEventListener("click", () => say(cheeky));
+    document.querySelector("#secret").addEventListener("click", () => say(secrets));
+  </script>
+</body>
+</html>
