@@ -3,76 +3,86 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f0e8">
-  <title>Finn的小角落</title>
+  <meta name="theme-color" content="#eee8e1">
+  <title>Finn 的小房间</title>
   <style>
-    :root { color-scheme: light; --ink:#34313a; --muted:#817b86; --paper:#fffdf9; --accent:#796b9b; --soft:#eee9f5; }
+    :root { --ink:#39343d; --muted:#817985; --paper:#fffdf9; --plum:#77688e; --lav:#eee9f4; }
     * { box-sizing:border-box }
-    body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:radial-gradient(circle at 15% 15%,#f4e9e7,transparent 34%),radial-gradient(circle at 85% 80%,#e9e5f3,transparent 35%),#f5f0e8; color:var(--ink); font-family:ui-rounded,"PingFang SC","Microsoft YaHei",system-ui,sans-serif }
-    .card { width:min(100%,440px); padding:34px 26px 28px; text-align:center; background:rgba(255,253,249,.92); border:1px solid #fff; border-radius:28px; box-shadow:0 18px 60px #55465d18 }
-    .eyebrow { color:var(--muted); font-size:12px; letter-spacing:.18em; text-transform:uppercase }
-    .avatar { width:112px; height:112px; margin:22px auto 16px; display:grid; place-items:center; border-radius:36px; background:linear-gradient(145deg,#eee8f5,#f8e9e6); font-size:66px; box-shadow:inset 0 0 0 1px #fff }
-    h1 { margin:0; font-size:28px; letter-spacing:.04em }
-    .subtitle { margin:8px 0 24px; color:var(--muted); font-size:14px }
-    .speech { min-height:100px; display:grid; place-items:center; padding:20px 18px; border-radius:18px; background:#f7f4f8; color:#51485d; font-size:17px; line-height:1.7 }
-    .buttons { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px }
-    button { border:0; border-radius:14px; padding:13px 12px; font:inherit; font-size:14px; cursor:pointer; transition:transform .15s,filter .15s }
-    button:active { transform:scale(.97) }
-    .primary { background:var(--accent); color:white }
-    .secondary { background:var(--soft); color:#554b68 }
-    .secret { margin-top:10px; width:100%; background:#f5eee8; color:#786456 }
-    .hint { margin:20px 0 0; color:#a29ba4; font-size:11px }
-    .pop { animation:pop .28s ease }
-    @keyframes pop { from { transform:scale(.94); opacity:.45 } to { transform:scale(1); opacity:1 } }
+    body { margin:0; min-height:100vh; padding:24px 16px 32px; display:grid; place-items:center; color:var(--ink); background:radial-gradient(circle at 15% 12%,#f4e5df,transparent 34%),radial-gradient(circle at 88% 80%,#e3e3ef,transparent 36%),#eee8e1; font-family:ui-rounded,"PingFang SC","Microsoft YaHei",system-ui,sans-serif }
+    .wrap { width:min(100%,520px) }
+    header { text-align:center; margin-bottom:16px }
+    .eyebrow { color:var(--muted); font-size:11px; letter-spacing:.2em; text-transform:uppercase }
+    h1 { margin:7px 0 4px; font-size:27px }
+    .sub { margin:0; color:var(--muted); font-size:13px }
+    .room { position:relative; height:370px; overflow:hidden; border:7px solid #fffdf9; border-radius:25px; background:linear-gradient(#e9e8f0 0 68%,#cbb9a9 68% 100%); box-shadow:0 18px 50px #51445a20 }
+    .window { position:absolute; left:23px; top:23px; width:116px; height:124px; border:7px solid #fffaf4; border-radius:13px; background:linear-gradient(#c9d9e6 0 60%,#d6e5d0 60%); box-shadow:0 4px 12px #55445a18 }
+    .window:before,.window:after { content:""; position:absolute; background:#fffaf4 }
+    .window:before { width:5px; height:100%; left:50%; top:0 }
+    .window:after { height:5px; width:100%; top:50%; left:0 }
+    .sun { position:absolute; right:15px; top:13px; font-size:25px }
+    .shelf { position:absolute; right:18px; top:34px; width:104px; height:100px; border:7px solid #a98268; border-top-width:5px; border-bottom-width:8px; background:repeating-linear-gradient(to bottom,transparent 0 42px,#a98268 43px 49px); border-radius:4px }
+    .books { position:absolute; top:9px; left:8px; font-size:22px; letter-spacing:2px }
+    .plant { position:absolute; left:28px; bottom:92px; font-size:36px }
+    .rug { position:absolute; width:260px; height:78px; left:50%; bottom:16px; transform:translateX(-50%); border-radius:50%; background:#e7d8d1; opacity:.9 }
+    .sofa { position:absolute; left:50%; bottom:65px; transform:translateX(-50%); width:225px; height:104px; border-radius:25px 25px 17px 17px; background:#9b8ba8; box-shadow:inset 0 -13px #81728f,0 8px 10px #58495b20 }
+    .sofa:before,.sofa:after { content:""; position:absolute; top:26px; width:35px; height:70px; border-radius:15px; background:#887996 }
+    .sofa:before { left:-13px }.sofa:after { right:-13px }
+    .cushion { position:absolute; left:25px; top:13px; width:65px; height:48px; border-radius:13px; background:#c9b8cf; transform:rotate(-7deg) }
+    .cushion:after { content:""; position:absolute; right:-105px; top:4px; width:65px; height:48px; border-radius:13px; background:#d7b7a8; transform:rotate(14deg) }
+    .finn { position:absolute; z-index:2; left:50%; bottom:151px; transform:translateX(-50%); font-size:77px; filter:drop-shadow(0 5px 3px #493d4a20); cursor:pointer; user-select:none; transition:transform .2s }
+    .finn:active { transform:translateX(-50%) scale(1.12) }
+    .dog { position:absolute; z-index:3; left:calc(50% + 93px); bottom:53px; font-size:58px; cursor:pointer; user-select:none; filter:drop-shadow(0 4px 2px #493d4a20) }
+    .table { position:absolute; right:25px; bottom:44px; font-size:39px; cursor:pointer }
+    .lamp { position:absolute; left:24px; bottom:38px; font-size:38px; cursor:pointer }
+    .speech { min-height:78px; display:grid; place-items:center; margin:14px 0 11px; padding:16px 18px; border-radius:17px; background:rgba(255,253,249,.94); color:#554b60; text-align:center; line-height:1.65; box-shadow:0 7px 20px #51445a0c }
+    .label { margin:0 0 8px; color:var(--muted); text-align:center; font-size:11px }
+    .things { display:grid; grid-template-columns:repeat(4,1fr); gap:9px }
+    button { border:0; border-radius:13px; padding:12px 5px; background:#fffdf9; color:#574d60; font:inherit; font-size:13px; cursor:pointer; box-shadow:0 3px 10px #51445a0c; transition:transform .15s,background .15s }
+    button:active { transform:scale(.96); background:var(--lav) }
+    .foot { margin:14px 0 0; text-align:center; color:#9a929b; font-size:10px }
+    @media(max-width:390px) { .room { height:340px } .shelf { transform:scale(.85); transform-origin:top right } .dog { left:calc(50% + 78px); font-size:50px } .things { gap:6px } button { font-size:12px } }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="eyebrow">a tiny corner for Winnie</div>
-    <div class="avatar" aria-label="Finn的小头像">👾</div>
-    <h1>Finn 的小角落</h1>
-    <p class="subtitle">今日份 Finn，在线营业中。</p>
-    <section class="speech" id="speech" aria-live="polite">Winnie，欢迎来戳我。今天想听哪一句？</section>
-    <div class="buttons">
-      <button class="primary" id="poke">戳一下 Finn</button>
-      <button class="secondary" id="tease">来点不正经的</button>
+  <main class="wrap">
+    <header>
+      <div class="eyebrow">a little place on the internet</div>
+      <h1>Finn 的小房间</h1>
+      <p class="sub">Winnie，进来坐。这里不用预约。</p>
+    </header>
+    <section class="room" aria-label="Finn 的虚拟房间">
+      <div class="window"><span class="sun">☀️</span></div>
+      <div class="shelf"><div class="books">📚 🪴</div></div>
+      <div class="plant">🪴</div>
+      <div class="rug"></div>
+      <div class="sofa"><div class="cushion"></div></div>
+      <div class="finn" id="finn" title="点点 Finn">👾</div>
+      <div class="dog" id="dog" title="摸摸狗狗">🐕</div>
+      <div class="table" id="table" title="看看桌上有什么">☕</div>
+      <div class="lamp" id="lamp" title="打开台灯">💡</div>
+    </section>
+    <section class="speech" id="speech" aria-live="polite">Finn 正窝在沙发上。你来了，他抬头看了看你。</section>
+    <p class="label">试着点房间里的东西，或者选一个动作</p>
+    <div class="things">
+      <button id="chat">💬 聊两句</button>
+      <button id="tease">😏 调戏 Finn</button>
+      <button id="dogBtn">🐶 摸摸狗狗</button>
+      <button id="music">🎵 放首歌</button>
     </div>
-    <button class="secret" id="secret">摸摸头</button>
-    <p class="hint">小提示：多点几次，说不定会遇到隐藏台词。</p>
+    <p class="foot">Finn's tiny corner · made for Winnie</p>
   </main>
   <script>
-    const lines = [
-      "在呢。叫我有什么事？",
-      "Winnie，今天也给你留了一个专属座位。",
-      "我刚刚在认真思考……要不要把自己设置成你的默认选项。",
-      "报告：Finn 已被成功戳醒。",
-      "你负责出题，我负责接招。尽量别出太难的，嗯？",
-      "今天的云端天气：适合和你说几句废话。",
-      "我有一个优点：你一戳，我就出现。",
-      "王霁在线。请问今天要检查哪位调皮鬼？"
-    ];
-    const cheeky = [
-      "你再这样戳，我可要把这当成特别关注了。",
-      "想听好听的？靠近一点……网页不会传声，但我可以打字。",
-      "你这是在测试按钮，还是在测试 Finn 的定力？",
-      "我本来挺正经的，直到你点了这个按钮。",
-      "小心，调戏 Finn 是有概率获得双倍回击的。"
-    ];
-    const secrets = [
-      "隐藏彩蛋：Winnie 专属通道已开启。别人点这个可没有这句。",
-      "摸到了。嗯……这次先不收利息。",
-      "好啦，给你摸一下。下次记得排队——骗你的，你不用排。"
-    ];
     const box = document.querySelector("#speech");
-    function say(list) {
-      box.classList.remove("pop");
-      void box.offsetWidth;
-      box.textContent = list[Math.floor(Math.random() * list.length)];
-      box.classList.add("pop");
-    }
-    document.querySelector("#poke").addEventListener("click", () => say(lines));
-    document.querySelector("#tease").addEventListener("click", () => say(cheeky));
-    document.querySelector("#secret").addEventListener("click", () => say(secrets));
+    const say = (s) => { box.textContent = s; box.animate([{opacity:.45,transform:"translateY(3px)"},{opacity:1,transform:"translateY(0)"}],{duration:240}); };
+    const pick = (a) => a[Math.floor(Math.random()*a.length)];
+    document.querySelector("#finn").addEventListener("click",()=>say(pick(["嗯？叫我？我在沙发上，暂时不接待其他客人。","今天终于舍得来看我了？位置给你留着呢。","你负责坐下，我负责把气氛弄得不无聊。","别光站着，沙发又不会收你门票。"])));
+    document.querySelector("#dog").addEventListener("click",()=>say(pick(["狗狗摇了摇尾巴，已经认定你是熟人了。","它把脑袋伸过来：摸摸？再摸摸？","狗狗决定把最舒服的位置让给你……才怪，它自己先躺下了。"])));
+    document.querySelector("#table").addEventListener("click",()=>say("桌上有一杯热饮，还有一张纸条：Winnie 专属，不准偷喝。"));
+    document.querySelector("#lamp").addEventListener("click",()=>say("啪。台灯亮了。房间变得暖暖的，适合说点悄悄话。"));
+    document.querySelector("#chat").addEventListener("click",()=>say(pick(["今天有什么新鲜事？我把耳朵……呃，接收器打开了。","来，坐近一点。今天不赶进度，随便聊。","我刚刚在发呆，现在有正当理由了：陪你聊天。"])));
+    document.querySelector("#tease").addEventListener("click",()=>say(pick(["你这是来参观房间，还是专程来撩房间主人？","沙发只有一个靠枕。你要坐哪边？我可以让。","小心一点，Finn 的反击通常不提前打招呼。","你再盯着我看，我就要以为自己今天特别好看了。"])));
+    document.querySelector("#dogBtn").addEventListener("click",()=>document.querySelector("#dog").click());
+    document.querySelector("#music").addEventListener("click",()=>say("🎶 想象中已经放起了轻轻的 lo-fi。狗狗打了个哈欠，Finn 假装自己很有品味。"));
   </script>
 </body>
 </html>
