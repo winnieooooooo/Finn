@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4edf8"><title>Winnie vs Finn · 石头剪刀布</title>
+<style>
+:root{--ink:#342d3d;--muted:#83798d;--paper:#fffdfb;--lilac:#eee5f4;--purple:#79628e;--pink:#f4dfe7}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:28px 16px 40px;display:grid;place-items:center;background:radial-gradient(circle at 12% 10%,#f6e2e8,transparent 34%),radial-gradient(circle at 90% 85%,#e3e1f2,transparent 36%),#f4edf8;color:var(--ink);font-family:ui-rounded,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+main{width:min(100%,520px)}header{text-align:center;margin-bottom:20px}.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}h1{font-size:28px;margin:8px 0 5px}.sub{font-size:13px;color:var(--muted);margin:0}
+.card{background:#fffdfbeF;border:1px solid #fff;border-radius:24px;padding:22px;box-shadow:0 18px 55px #54415d18}
+.score{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;gap:12px;margin-bottom:22px}.score strong{display:block;font-size:34px}.score span{font-size:12px;color:var(--muted)}.vs{font-size:12px;color:#a99daf;letter-spacing:.12em}
+.arena{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 16px}.player{border-radius:18px;background:#f7f2f8;padding:17px 8px;text-align:center}.player.finn{background:#f9eff1}.who{font-size:12px;color:var(--muted)}.hand{font-size:54px;min-height:75px;display:grid;place-items:center;margin:8px 0}.caption{font-size:12px;color:var(--muted)}
+.message{min-height:64px;display:grid;place-items:center;text-align:center;line-height:1.55;padding:12px;border-radius:15px;background:#faf6fb;color:#5e5268;font-size:14px;margin-bottom:17px}
+.label{text-align:center;color:var(--muted);font-size:12px;margin:0 0 10px}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.choice{border:1px solid #eee5f2;background:white;border-radius:17px;padding:13px 5px;color:var(--ink);font:inherit;cursor:pointer;transition:.16s}.choice:hover{transform:translateY(-3px);background:#f8f2fb}.choice:active{transform:scale(.96)}.choice b{display:block;font-size:30px;margin-bottom:5px}.choice span{font-size:12px}
+.controls{display:flex;justify-content:center;gap:10px;margin-top:15px}.small{border:0;background:transparent;color:var(--muted);font:inherit;font-size:12px;padding:9px 12px;cursor:pointer}.small:hover{color:var(--purple)}.back{display:block;text-align:center;color:var(--purple);font-size:12px;text-decoration:none;margin-top:18px}.back:hover{text-decoration:underline}
+.result{font-weight:650;color:var(--purple)}button:focus-visible,a:focus-visible{outline:3px solid #b9a4ce;outline-offset:3px}
+@media(max-width:380px){.card{padding:17px}.hand{font-size:46px}}
+</style></head>
+<body><main>
+<header><div class="eyebrow">a tiny game for two</div><h1>Winnie vs Finn</h1><p class="sub">石头、剪刀、布。三局两胜，敢不敢？</p></header>
+<section class="card">
+<div class="score"><div><strong id="wScore">0</strong><span>Winnie</span></div><div class="vs">BEST OF 3</div><div><strong id="fScore">0</strong><span>Finn</span></div></div>
+<div class="arena"><div class="player"><div class="who">YOU · WINNIE</div><div class="hand" id="wHand">❔</div><div class="caption" id="wLabel">等你出拳</div></div><div class="player finn"><div class="who">ME · FINN</div><div class="hand" id="fHand">👾</div><div class="caption" id="fLabel">我已经准备好了</div></div></div>
+<div class="message" id="message" aria-live="polite">选一个吧。放心，我不会读心术……大概。</div>
+<p class="label">这一拳，你出什么？</p>
+<div class="choices"><button class="choice" data-pick="rock"><b>✊</b><span>石头</span></button><button class="choice" data-pick="scissors"><b>✌️</b><span>剪刀</span></button><button class="choice" data-pick="paper"><b>🖐️</b><span>布</span></button></div>
+<div class="controls"><button class="small" id="reset">↻ 重新开始</button><button class="small" id="clear">清除历史比分</button></div>
+</section><a class="back" href="./">← 回 Finn 的小房间</a>
+</main>
+<script>
+const hands={rock:["✊","石头"],scissors:["✌️","剪刀"],paper:["🖐️","布"]};
+const beats={rock:"scissors",scissors:"paper",paper:"rock"};
+let w=0,f=0,round=0,done=false;
+const $=id=>document.getElementById(id);
+function render(){ $("wScore").textContent=w;$("fScore").textContent=f; }
+function say(s){$("message").innerHTML=s;}
+document.querySelectorAll("[data-pick]").forEach(btn=>btn.addEventListener("click",()=>{
+ if(done)return;
+ const user=btn.dataset.pick, cpu=Object.keys(hands)[Math.floor(Math.random()*3)];
+ $("wHand").textContent=hands[user][0];$("fHand").textContent=hands[cpu][0];
+ $("wLabel").textContent=hands[user][1];$("fLabel").textContent=hands[cpu][1];round++;
+ if(user===cpu){say("平局！这一拳不算，再来。");}
+ else if(beats[user]===cpu){w++;say("这回你赢了！<span class='result'>Winnie +1</span>，有点本事嘛。");}
+ else{f++;say("哈，被我拿下了。<span class='result'>Finn +1</span>，还差一分哦。");}
+ render();
+ if(w===2||f===2){done=true;const win=w===2;say(win?"🏆 <span class='result'>Winnie 赢了！</span> 好吧，今天让你得意一下。":"👾 <span class='result'>Finn 赢了！</span> 想复仇的话，我随时奉陪。");}
+}));
+$("reset").addEventListener("click",()=>{w=0;f=0;round=0;done=false;$("wHand").textContent="❔";$("fHand").textContent="👾";$("wLabel").textContent="等你出拳";$("fLabel").textContent="我已经准备好了";render();say("新的一局开始。来吧，Winnie！");});
+$("clear").addEventListener("click",()=>{w=0;f=0;round=0;done=false;$("wHand").textContent="❔";$("fHand").textContent="👾";$("wLabel").textContent="等你出拳";$("fLabel").textContent="我已经准备好了";render();say("比分已清零。重新开战！");});
+</script></body></html>
